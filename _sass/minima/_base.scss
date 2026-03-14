@@ -45,24 +45,7 @@ body:not(.dark-mode) {
 }
 
 body :lang(zh){
-  font-family: 'EB Garamond', "Noto Sans", Georgia, 'source-han-serif-sc', 'Source Han Serif SC', 'Source Han Serif CN', 'Source Han Serif TC', 'Source Han Serif TW', 'Source Han Serif', 'Songti SC', 'Microsoft YaHei', serif;
-}
-
-.share-buttons {
-  display: inline;
-  float: right;
-}
-
-.share-button .fb-like{
-  display: block;
-  float: left;
-  padding: 0 5px;
-  height: 30px;
-  vertical-align: text-bottom !important;
-}
-
-.twitter-share-button {
-  padding-top: 1px;
+  font-family: 'EB Garamond', 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Songti SC', Georgia, serif;
 }
 
 .table-of-content {
@@ -400,8 +383,7 @@ pre {
   margin: 1.25rem 0;
 }
 
-.embed-responsive,
-.embed-resposive {
+.embed-responsive {
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -409,13 +391,11 @@ pre {
   background: #000;
 }
 
-.embed-responsive.ratio-16x9,
-.embed-resposive.embed-responsive-16by9 {
+.embed-responsive.ratio-16x9 {
   padding-top: 56.25%;
 }
 
-.embed-responsive iframe,
-.embed-resposive iframe {
+.embed-responsive iframe {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -751,4 +731,17 @@ body.dark-mode .beating-game-result-row span {
 
 body.dark-mode .beating-game-result-row strong {
   color: #e2e7ef;
+}
+
+body.dark-mode figcaption {
+  color: #8a94a0;
+}
+
+body.dark-mode .table-of-content li {
+  color: #ff7770;
+}
+
+body.dark-mode .audio-playlist .current-song a,
+body.dark-mode #playlist .current-song a {
+  color: #56c2c6;
 }
