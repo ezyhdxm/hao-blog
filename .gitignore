@@ -4,3 +4,17 @@ _site
 .jekyll-metadata
 vendor
 .bundle/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Node (if any)
+node_modules/
