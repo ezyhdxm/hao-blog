@@ -1,28 +1,12 @@
 <header class="site-header" role="banner">
-
     <div class="site-navi" id="navbar">
-        {% assign default_paths = site.pages | map: "path" %}
         <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
-        <a class="page-link" href="{{ '/notes.html' | relative_url }}">&#x1F306; Notes</a>
-        <a class="page-link" href="{{ '/about.html' | relative_url }}">&#x1f349; About</a> <!--&#x1f349 represents watermelon unicode-->
-        <a class="page-link" href="{{ '/contact.html' | relative_url }}">&#x1f4ee; Contact</a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>    
-    </div>
-
-    <!--div class="wrapper">
-        {% assign default_paths = site.pages | map: "path" %}
-        <a class="site-title" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
-
-        <nav class="site-nav">
-            <a class="page-link" href="/hao-blog/about.html" target="_blank">&#x1f349; About</a>
+        <nav class="site-nav-links">
+            <a class="page-link" href="{{ '/notes.html' | relative_url }}">Notes</a>
+            <a class="page-link" href="{{ '/about.html' | relative_url }}">About</a>
+            <a class="page-link" href="{{ '/contact.html' | relative_url }}">Contact</a>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="toggle-icon">&#9790;</span> <span class="toggle-text">Dark</span></button>
         </nav>
-
-        <nav class="site-nav">
-            <a class="page-link" href="{{ "/contact.html" | relative_url }}">&#x1f4ee; Contact</a>
-        </nav-->
-
-        
-
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
-
 </header>

@@ -1,34 +1,25 @@
 ---
 layout: default
 ---
-<div class="home other-pages">
-  <h1 class="page-heading">Posts</h1>
+<div class="home">
+  <h1 class="page-heading">Posts (Archive)</h1>
   <ul class="post-list">
     {% for post in site.posts %}
-      {% if post.lang %}
-      <div class="post" lang="{{post.lang}}">
-      {% else %}
-      <div class="post">
-      {% endif %}
-        <li>
-          {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
-          <span class="post-meta">
-            {{ post.date | date: date_format }}
-            <span>
-              {% for tag in post.tags %}
-                {% capture tag_name %}{{ tag }}{% endcapture %}
-                <a class="post-tag" href="/hao-blog/tag/{{ tag_name }}"><nobr>{{ tag_name }}</nobr>&nbsp;</a>
-              {% endfor %}
-            </span>
+      <li class="post-item" {% if post.lang %}lang="{{ post.lang }}"{% endif %}>
+        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+        <span class="post-meta">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
+          <span>
+            {% for tag in post.tags %}
+              {% capture tag_name %}{{ tag }}{% endcapture %}
+              <a class="post-tag" href="{{ '/tag/' | append: tag_name | relative_url }}"><nobr>{{ tag_name }}</nobr></a>
+            {% endfor %}
           </span>
-          <h2>
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-            {% if post.excerpt %}
-              {{ post.excerpt }}
-            {% endif %}
-          </h2>
-        </li>
-      </div>
+        </span>
+        <h2>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h2>
+      </li>
     {% endfor %}
   </ul>
- </div>
+</div>

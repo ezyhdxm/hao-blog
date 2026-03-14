@@ -10,43 +10,21 @@
 
     <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
 
-    <!-- For Latex -->
-    
-    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script-->
-    <script id="MathJax-script" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
+    {% if page.math != false %}
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    {% endif %}
 
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
     <link rel="shortcut icon" href="{{ '/assets/images/radio.ico' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
-    <link rel="stylesheet" type="text/css" href="/hao-blog/dist/fonts.css" />
-    <link rel="stylesheet" href="https://use.typekit.net/ner8oiv.css">
-    <link href="https://fonts.loli.net/css?family=Noto+Serif+SC&display=swap" rel="stylesheet">
-    <!--link href="https://fonts.googleapis.com/css?family=Noto+Sans+SC" rel="stylesheet"-->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-    </style>
-    
-    
-    <!-- For tables -->
-    <style>
-      table{
-        border-left:1px solid #000000;border-top:1px solid #000000;
-        width: 100%;
-        word-wrap:break-word; word-break:break-all;
-      }
-      table th{
-      text-align:center;
-      }
-      table th,td{
-        border-right:1px solid #000000;border-bottom:1px solid #000000;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ '/dist/fonts.css' | relative_url }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Google Analytics -->
     <script>
@@ -57,30 +35,6 @@
 
         ga('create', 'UA-8161570-6', 'auto');
         ga('send', 'pageview');
-    </script>
-
-    <!-- For Facebook share button -->
-    <div id="fb-root"></div>
-    <script>
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <!--Using Typekit, the Adobe Fonts-->
-    <script>
-      (function(d) {
-        var config = {
-          kitId: 'pzh7olc',
-          scriptTimeout: 3000,
-          async: true
-        },
-        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-      })(document);
     </script>
 
 </head>

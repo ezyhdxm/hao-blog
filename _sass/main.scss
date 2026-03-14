@@ -4,8 +4,9 @@
 @charset "utf-8";
 
 // Define defaults for each variable.
-$base-font-family: adobe-garamond-pro,'EB Garamond', "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$base-font-size:   20px !default;
+$heading-font-family: 'EB Garamond', Georgia, 'Noto Serif SC', serif;
+$base-font-family: 'EB Garamond', "Noto Serif SC", Georgia, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$base-font-size:   19px !default;
 $base-font-weight: 400 !default;
 $small-font-size:  $base-font-size * 0.875 !default;
 $base-line-height: 1.6 !default;

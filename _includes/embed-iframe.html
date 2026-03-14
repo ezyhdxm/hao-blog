@@ -1,0 +1,18 @@
+<figure class="media-block">
+  <div class="embed-responsive {{ include.ratio | default: 'ratio-16x9' }}">
+    <iframe
+      src="{{ include.src }}"
+      title="{{ include.title | default: 'Embedded media' | escape }}"
+      loading="lazy"
+      frameborder="0"
+      allow="{{ include.allow | default: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' }}"
+      allowfullscreen>
+    </iframe>
+  </div>
+  {% if include.caption %}
+  <figcaption>{{ include.caption }}</figcaption>
+  {% endif %}
+</figure>
+<noscript>
+  <p><a href="{{ include.fallback_url | default: include.src }}">Open embedded media in a new tab</a>.</p>
+</noscript>

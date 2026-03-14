@@ -3,7 +3,8 @@ author: Hao Yan
 email: yh513447952@outlook.com
 description: Fix my radio
 baseurl: "/hao-blog" # the subpath of your site, e.g. /blog
-profile_url: "http://ezyhdxm.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://ezyhdxm.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+profile_url: "https://ezyhdxm.github.io"
 twitter_username: phipsi41
 github_username:  ezyhdxm
 

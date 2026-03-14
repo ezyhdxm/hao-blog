@@ -1,19 +1,27 @@
 ---
 layout: default
 ---
-<div class="post">
-<h1>Tag: {{ page.tag }}</h1>
-<ul>
-{% for post in site.tags[page.tag] %}
-  {% if post.lang %}
-  <li lang="{{post.lang}}">
-  {% else %}
-  <li>
-  {% endif %}
-    <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
-    {{ post.description }}
-  </li>
-{% endfor %}
-</ul>
-</div>
-<hr>
+<section class="tag-page">
+  <header class="tag-page-header">
+    <h1 class="page-heading">Posts tagged</h1>
+    <p class="post-meta tag-page-meta">
+      <a class="post-tag" href="{{ '/tag/' | append: page.tag | relative_url }}"><nobr>{{ page.tag }}</nobr></a>
+      <span class="tag-page-count">{{ site.tags[page.tag] | size }} posts</span>
+    </p>
+  </header>
+
+  <ul class="tag-post-cards">
+    {% for post in site.tags[page.tag] %}
+      {% if post.lang %}
+      <li class="tag-post-card" lang="{{ post.lang }}">
+      {% else %}
+      <li class="tag-post-card">
+      {% endif %}
+        <a class="tag-post-card-link" href="{{ post.url | relative_url }}">
+          <span class="post-link">{{ post.title }}</span>
+          <span class="post-meta tag-post-card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>

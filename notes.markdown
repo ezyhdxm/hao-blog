@@ -1,12 +1,12 @@
 ---
 layout: default
-title: About
+title: Notes
 ---
 
-Inspired by [Sinho Chewi](https://chewisinho.github.io/class-notes), this page is a collection of notes I take during my graduate study. It will be update monthly starting in October 2022.  
+<div class="notes-page" markdown="1">
 
----
-
-## Monthly Reviews
+## Reviews
 
 - [05/2022](https://drive.google.com/file/d/1tpF3vfqEDmRCd8UKMxatd8kN-NTMDAA1/view?usp=sharing)
+
+</div>
