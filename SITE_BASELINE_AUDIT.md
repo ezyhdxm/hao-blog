@@ -5,7 +5,7 @@ This document tracks the baseline audit for global assets and layout-level scrip
 ## Scope
 
 - Shared includes and layouts: `_includes/head.html`, `_layouts/default.html`, `_layouts/post.html`
-- Existing interactive post behavior: `_posts/2021-08-11-Jazz_note_1.md`, `assets/javascripts/audioPlayer.js`
+- Existing interactive post behavior: `_posts/2021-08-11-jazz-music-notes-1-scale-theory.md`, `assets/javascripts/audioPlayer.js`
 
 ## Asset Decisions
 
