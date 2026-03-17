@@ -1309,6 +1309,93 @@ body.dark-mode .digest-back a {
 }
 
 
+// ── Paper interest rating widget ────────────────────────────────────────────
+
+.paper-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid $grey-color-light;
+}
+
+body:not(.dark-mode) .paper-rating {
+  border-top-color: #e8dfd8;
+}
+
+body.dark-mode .paper-rating {
+  border-top-color: #2c3138;
+}
+
+.paper-rating-label {
+  font-size: 0.76rem;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  color: $grey-color;
+  white-space: nowrap;
+  user-select: none;
+}
+
+body.dark-mode .paper-rating-label {
+  color: #8a94a0;
+}
+
+.paper-rating-stars {
+  display: flex;
+  gap: 0;
+  line-height: 1;
+}
+
+.paper-rating-star {
+  background: none;
+  border: none;
+  padding: 0 0.12rem;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #d9cec7;
+  transition: color 0.12s ease, transform 0.1s ease;
+
+  &:hover,
+  &.hovered {
+    color: $HONEY;
+    transform: scale(1.2);
+  }
+
+  &.rated {
+    color: $HONEY;
+  }
+}
+
+body.dark-mode .paper-rating-star {
+  color: #3a424d;
+
+  &:hover,
+  &.hovered,
+  &.rated {
+    color: $HONEY;
+  }
+}
+
+.paper-rating-saved {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: $grey-color;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+body.dark-mode .paper-rating-saved {
+  color: #8a94a0;
+}
+
+
 // ── "View all digests" link in sidebar ──────────────────────────────────────
 
 .digest-view-all {

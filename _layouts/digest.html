@@ -68,3 +68,89 @@ layout: default
   {% endif %}
 
 </article>
+
+<script>
+(function () {
+  var STORAGE_KEY_PREFIX = 'paper-rating-';
+  var LABELS = ['', 'not for me', 'somewhat interesting', 'interesting', 'very interesting', 'must read'];
+
+  function saveRating(arxivId, value) {
+    try { localStorage.setItem(STORAGE_KEY_PREFIX + arxivId, String(value)); } catch (e) {}
+  }
+
+  function loadRating(arxivId) {
+    try { return parseInt(localStorage.getItem(STORAGE_KEY_PREFIX + arxivId) || '0', 10); } catch (e) { return 0; }
+  }
+
+  function applyRating(stars, value) {
+    stars.forEach(function (btn, i) {
+      btn.classList.toggle('rated', i < value);
+      btn.setAttribute('aria-label', 'Rate ' + (i + 1) + ' star' + (i > 0 ? 's' : ''));
+    });
+  }
+
+  function initWidget(widget) {
+    var arxivId = widget.dataset.arxivId;
+    if (!arxivId) return;
+
+    var label = document.createElement('span');
+    label.className = 'paper-rating-label';
+    label.textContent = 'How interesting?';
+
+    var starsWrap = document.createElement('span');
+    starsWrap.className = 'paper-rating-stars';
+    starsWrap.setAttribute('role', 'group');
+    starsWrap.setAttribute('aria-label', 'Interest rating');
+
+    var saved = document.createElement('span');
+    saved.className = 'paper-rating-saved';
+
+    var current = loadRating(arxivId);
+    var stars = [];
+
+    for (var i = 1; i <= 5; i++) {
+      (function (val) {
+        var btn = document.createElement('button');
+        btn.className = 'paper-rating-star';
+        btn.textContent = '★';
+        btn.type = 'button';
+
+        btn.addEventListener('mouseenter', function () {
+          stars.forEach(function (s, idx) {
+            s.classList.toggle('hovered', idx < val);
+          });
+        });
+
+        btn.addEventListener('mouseleave', function () {
+          stars.forEach(function (s) { s.classList.remove('hovered'); });
+        });
+
+        btn.addEventListener('click', function () {
+          current = val;
+          saveRating(arxivId, val);
+          applyRating(stars, val);
+          saved.textContent = LABELS[val] || '';
+          saved.classList.add('visible');
+          setTimeout(function () { saved.classList.remove('visible'); }, 2000);
+        });
+
+        stars.push(btn);
+        starsWrap.appendChild(btn);
+      })(i);
+    }
+
+    applyRating(stars, current);
+    if (current > 0) {
+      saved.textContent = LABELS[current] || '';
+      saved.classList.add('visible');
+      setTimeout(function () { saved.classList.remove('visible'); }, 1800);
+    }
+
+    widget.appendChild(label);
+    widget.appendChild(starsWrap);
+    widget.appendChild(saved);
+  }
+
+  document.querySelectorAll('.paper-rating').forEach(initWidget);
+})();
+</script>
