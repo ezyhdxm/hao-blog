@@ -1,0 +1,125 @@
+---
+layout: default
+title: ArXiv Digest Archive
+---
+
+<div class="digest-archive">
+
+  <header class="digest-archive-header">
+    <h1 class="digest-archive-title">ArXiv Digest</h1>
+    <p class="digest-archive-sub">Daily paper summaries from arXiv, powered by Claude.</p>
+  </header>
+
+  {% if site.data.arxiv_digests %}
+    <div id="digest-archive-weeks">
+      {% for entry in site.data.arxiv_digests %}
+        <div class="digest-archive-entry"
+             data-date="{{ entry.date }}"
+             data-theory-url="{% if entry.theory_url %}{{ entry.theory_url | relative_url }}{% endif %}"
+             data-theory-count="{{ entry.theory_count }}"
+             data-applied-url="{% if entry.applied_url %}{{ entry.applied_url | relative_url }}{% endif %}"
+             data-applied-count="{{ entry.applied_count }}">
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="digest-archive-empty">No digests yet.</p>
+  {% endif %}
+
+</div>
+
+<script>
+(function() {
+  var container = document.getElementById('digest-archive-weeks');
+  if (!container) return;
+
+  var entries = container.querySelectorAll('.digest-archive-entry');
+  if (!entries.length) return;
+
+  // Parse entries into objects
+  var items = [];
+  entries.forEach(function(el) {
+    items.push({
+      date: el.getAttribute('data-date'),
+      theoryUrl: el.getAttribute('data-theory-url'),
+      theoryCount: el.getAttribute('data-theory-count'),
+      appliedUrl: el.getAttribute('data-applied-url'),
+      appliedCount: el.getAttribute('data-applied-count')
+    });
+  });
+
+  // Compute ISO week start (Monday) for a date string "YYYY-MM-DD"
+  function weekStart(dateStr) {
+    var d = new Date(dateStr + 'T12:00:00');
+    var day = d.getDay();
+    var diff = (day === 0 ? -6 : 1) - day;
+    var mon = new Date(d);
+    mon.setDate(d.getDate() + diff);
+    return mon;
+  }
+
+  function formatDate(d) {
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function formatDateFull(dateStr) {
+    var d = new Date(dateStr + 'T12:00:00');
+    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function weekKey(dateStr) {
+    var mon = weekStart(dateStr);
+    return mon.toISOString().slice(0, 10);
+  }
+
+  // Group by week
+  var weeks = {};
+  var weekOrder = [];
+  items.forEach(function(item) {
+    var key = weekKey(item.date);
+    if (!weeks[key]) {
+      weeks[key] = [];
+      weekOrder.push(key);
+    }
+    weeks[key].push(item);
+  });
+
+  // Build HTML
+  var html = '';
+  weekOrder.forEach(function(key) {
+    var mon = new Date(key + 'T12:00:00');
+    var fri = new Date(mon);
+    fri.setDate(mon.getDate() + 4);
+    var year = mon.getFullYear();
+    var weekLabel = formatDate(mon) + ' \u2013 ' + formatDate(fri) + ', ' + year;
+
+    html += '<section class="digest-week-group">';
+    html += '<h2 class="digest-week-heading">' + weekLabel + '</h2>';
+    html += '<ul class="digest-week-list">';
+
+    weeks[key].forEach(function(item) {
+      html += '<li class="digest-week-entry">';
+      html += '<span class="digest-week-date">' + formatDateFull(item.date) + '</span>';
+      html += '<div class="digest-entry-links">';
+      if (item.theoryUrl) {
+        html += '<a class="digest-entry-link digest-entry-link--theory" href="' + item.theoryUrl + '">Theory';
+        if (item.theoryCount) html += '<span class="digest-entry-count">' + item.theoryCount + '</span>';
+        html += '</a>';
+      }
+      if (item.appliedUrl) {
+        html += '<a class="digest-entry-link digest-entry-link--applied" href="' + item.appliedUrl + '">Applied AI';
+        if (item.appliedCount) html += '<span class="digest-entry-count">' + item.appliedCount + '</span>';
+        html += '</a>';
+      }
+      html += '</div></li>';
+    });
+
+    html += '</ul></section>';
+  });
+
+  container.innerHTML = html;
+})();
+</script>

@@ -9,6 +9,11 @@ twitter_username: phipsi41
 github_username:  ezyhdxm
 
 # Build settings
+collections:
+  arxiv:
+    output: true
+    permalink: /arxiv/:name/
+
 markdown: kramdown
 highlighter: rouge
 excerpt_separator: <!--more-->

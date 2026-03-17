@@ -2,41 +2,83 @@
 layout: default
 ---
 
-<div class="home">
-  <header class="home-header">
-    <h1 class="page-heading">Posts</h1>
-    <div class="language-switch">
-      <span class="toggle-label">EN</span>
-      <label class="toggle-switch">
-        <input type="checkbox" id="lang-toggle" onchange="toggleLanguage()">
-        <span class="slider"></span>
-      </label>
-      <span class="toggle-label">中文</span>
-    </div>
-  </header>
+<div class="home-grid">
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li class="post-item{% if forloop.first %} post-item--featured{% endif %}" data-lang="{{ post.lang }}" {% if post.lang %}lang="{{ post.lang }}"{% endif %}>
-        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
-        <span class="post-meta">
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
-          <span>
-            {% for tag in post.tags %}
-              {% capture tag_name %}{{ tag }}{% endcapture %}
-              <a class="post-tag" href="{{ '/tag/' | append: tag_name | relative_url }}"><nobr>{{ tag_name }}</nobr></a>
-            {% endfor %}
+  <!-- ── Left column: blog posts ──────────────────────────────────────── -->
+  <div class="home-posts-col">
+    <header class="home-header">
+      <h1 class="page-heading">Posts</h1>
+      <div class="language-switch">
+        <span class="toggle-label">EN</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="lang-toggle" onchange="toggleLanguage()">
+          <span class="slider"></span>
+        </label>
+        <span class="toggle-label">中文</span>
+      </div>
+    </header>
+
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <li class="post-item{% if forloop.first %} post-item--featured{% endif %}" data-lang="{{ post.lang }}" {% if post.lang %}lang="{{ post.lang }}"{% endif %}>
+          {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+          <span class="post-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
+            <span>
+              {% for tag in post.tags %}
+                {% capture tag_name %}{{ tag }}{% endcapture %}
+                <a class="post-tag" href="{{ '/tag/' | append: tag_name | relative_url }}"><nobr>{{ tag_name }}</nobr></a>
+              {% endfor %}
+            </span>
           </span>
-        </span>
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
-        {% if post.excerpt %}
-          <div class="post-excerpt">{{ post.excerpt }}</div>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+          <h2>
+            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          </h2>
+          {% if post.excerpt %}
+            <div class="post-excerpt">{{ post.excerpt }}</div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- ── Right column: arxiv digest ───────────────────────────────────── -->
+  <aside class="home-digest-col">
+    <header class="digest-col-header">
+      <h2 class="digest-col-heading">ArXiv Digest</h2>
+      <p class="digest-col-sub">Daily paper summaries, powered by Claude.</p>
+    </header>
+
+    {% if site.data.arxiv_digests %}
+      <ul class="digest-entry-list">
+        {% for entry in site.data.arxiv_digests limit:5 %}
+          <li class="digest-entry">
+            <span class="digest-entry-date">{{ entry.date }}</span>
+            <div class="digest-entry-links">
+              {% if entry.theory_url %}
+                <a class="digest-entry-link digest-entry-link--theory" href="{{ entry.theory_url | relative_url }}">
+                  Theory
+                  {% if entry.theory_count %}<span class="digest-entry-count">{{ entry.theory_count }}</span>{% endif %}
+                </a>
+              {% endif %}
+              {% if entry.applied_url %}
+                <a class="digest-entry-link digest-entry-link--applied" href="{{ entry.applied_url | relative_url }}">
+                  Applied AI
+                  {% if entry.applied_count %}<span class="digest-entry-count">{{ entry.applied_count }}</span>{% endif %}
+                </a>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if site.data.arxiv_digests.size > 5 %}
+        <a class="digest-view-all" href="{{ '/arxiv/' | relative_url }}">View all digests &rarr;</a>
+      {% endif %}
+    {% else %}
+      <p class="digest-col-empty">No digests yet. Run <code>export_to_blog.py</code> after your first digest run.</p>
+    {% endif %}
+  </aside>
+
 </div>
 
 <script>

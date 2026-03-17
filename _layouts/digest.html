@@ -1,0 +1,70 @@
+---
+layout: default
+---
+
+<article class="digest-page">
+
+  <header class="digest-header">
+    <div class="digest-header-meta">
+      {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: date_format }}
+      </time>
+      <span class="digest-type-badge digest-type-badge--{{ page.digest_type }}">
+        {% if page.digest_type == "theory" %}Theory{% else %}Applied AI{% endif %}
+      </span>
+      {% if page.paper_count %}
+        <span class="digest-paper-count">{{ page.paper_count }} paper{% if page.paper_count != 1 %}s{% endif %}</span>
+      {% endif %}
+    </div>
+    <h1 class="digest-title">{{ page.title | escape }}</h1>
+    <nav class="digest-back">
+      <a href="{{ '/arxiv/' | relative_url }}">&larr; All digests</a>
+    </nav>
+  </header>
+
+  <div class="digest-content">
+    {{ content }}
+  </div>
+
+  {% comment %}Prev/next navigation among same digest_type{% endcomment %}
+  {% assign sorted_digests = site.arxiv | sort: "date" %}
+  {% assign prev_digest = nil %}
+  {% assign next_digest = nil %}
+  {% assign found_current = false %}
+  {% for d in sorted_digests %}
+    {% if d.digest_type == page.digest_type %}
+      {% if found_current %}
+        {% assign next_digest = d %}
+        {% break %}
+      {% endif %}
+      {% if d.url == page.url %}
+        {% assign found_current = true %}
+      {% else %}
+        {% assign prev_digest = d %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if prev_digest or next_digest %}
+    <nav class="digest-nav">
+      <div class="digest-nav-prev">
+        {% if prev_digest %}
+          <a href="{{ prev_digest.url | relative_url }}">
+            <span class="digest-nav-label">&larr; Previous</span>
+            <span class="digest-nav-title">{{ prev_digest.date | date: "%b %-d" }}</span>
+          </a>
+        {% endif %}
+      </div>
+      <div class="digest-nav-next">
+        {% if next_digest %}
+          <a href="{{ next_digest.url | relative_url }}">
+            <span class="digest-nav-label">Next &rarr;</span>
+            <span class="digest-nav-title">{{ next_digest.date | date: "%b %-d" }}</span>
+          </a>
+        {% endif %}
+      </div>
+    </nav>
+  {% endif %}
+
+</article>
