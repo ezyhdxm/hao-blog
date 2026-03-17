@@ -475,8 +475,232 @@ body:not(.dark-mode) .tag-pill-count {
   margin-top: 0.5rem;
 }
 
-.notes-page h2 {
-  margin-top: 0;
+// ── Notes page ──────────────────────────────────────────────────────────────
+
+.notes-page {
+  max-width: 860px;
+}
+
+.notes-header {
+  margin-bottom: 2rem;
+}
+
+.notes-subtitle {
+  color: $grey-color;
+  font-size: 0.95rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+}
+
+body.dark-mode .notes-subtitle {
+  color: #8a94a0;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+}
+
+.note-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid $grey-color-light;
+  border-radius: 10px;
+  padding: 1.2rem 1.3rem 1rem;
+  background: #fdfaf8;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    border-color: lighten($crimson-color, 28%);
+    box-shadow: 0 5px 14px rgba(224, 31, 31, 0.10);
+    transform: translateY(-2px);
+  }
+}
+
+body:not(.dark-mode) .note-card {
+  background: #f6f2ee;
+  border-color: #e0d5cb;
+}
+
+body.dark-mode .note-card {
+  background: #1d2229;
+  border-color: #343b45;
+
+  &:hover {
+    border-color: #ff6d67;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.note-card-top {
+  margin-bottom: 1.1rem;
+}
+
+.note-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.note-date {
+  font-size: 0.78rem;
+  color: $grey-color;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
+body.dark-mode .note-date {
+  color: #8a94a0;
+}
+
+.note-topic-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: lighten($crimson-color, 44%);
+  border: 1px solid lighten($crimson-color, 30%);
+  color: $crimson-color-dark;
+}
+
+body:not(.dark-mode) .note-topic-badge {
+  background: #fdecea;
+  border-color: #f5c6c2;
+  color: #9b1010;
+}
+
+body.dark-mode .note-topic-badge {
+  background: rgba(255, 119, 112, 0.12);
+  border-color: rgba(255, 119, 112, 0.28);
+  color: #ff9490;
+}
+
+.note-title {
+  font-family: $heading-font-family;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  margin: 0 0 0.45rem;
+  letter-spacing: -0.2px;
+  color: $text-color;
+}
+
+body.dark-mode .note-title {
+  color: #e8ddd5;
+}
+
+.note-desc {
+  font-size: 0.88rem;
+  color: $grey-color;
+  line-height: 1.55;
+  margin: 0;
+}
+
+body.dark-mode .note-desc {
+  color: #8e97a3;
+}
+
+.note-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  padding-top: 0.85rem;
+  border-top: 1px solid $grey-color-light;
+}
+
+body:not(.dark-mode) .note-actions {
+  border-top-color: #e0d5cb;
+}
+
+body.dark-mode .note-actions {
+  border-top-color: #2c3138;
+}
+
+.note-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  line-height: 1.4;
+
+  &:hover {
+    opacity: 0.88;
+    text-decoration: none;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.13);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.note-btn--view {
+  background: $crimson-color;
+  border-color: $crimson-color-dark;
+  color: #fff;
+
+  &:hover {
+    background: $crimson-color-light;
+    color: #fff;
+  }
+}
+
+body.dark-mode .note-btn--view {
+  background: #c41919;
+  border-color: #a01212;
+  color: #fff;
+
+  &:hover {
+    background: #e02020;
+  }
+}
+
+.note-btn--dl {
+  background: transparent;
+  border-color: $grey-color-light;
+  color: $grey-color-dark;
+
+  &:hover {
+    border-color: $grey-color;
+    background: rgba($grey-color, 0.07);
+    color: $text-color;
+  }
+}
+
+body:not(.dark-mode) .note-btn--dl {
+  border-color: #ccc4bb;
+  color: #5a5248;
+}
+
+body.dark-mode .note-btn--dl {
+  border-color: #3a424d;
+  color: #b4bcc6;
+
+  &:hover {
+    border-color: #6a7480;
+    background: rgba(255, 255, 255, 0.05);
+    color: #e0e6ec;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .error-page {
