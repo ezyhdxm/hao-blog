@@ -745,3 +745,160 @@ body.dark-mode .audio-playlist .current-song a,
 body.dark-mode #playlist .current-song a {
   color: #56c2c6;
 }
+
+// ============================================================
+// Waveform demo blocks
+// ============================================================
+
+.waveform-demo {
+  border: 1px solid $grey-color-light;
+  border-radius: 14px;
+  padding: 1.25rem 1.35rem;
+  margin: 1.5rem 0;
+}
+
+.waveform-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 7 / 1;
+  border-radius: 8px;
+  background: #1a1a1e;
+  margin-bottom: 1rem;
+}
+
+.waveform-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+
+  & + .waveform-controls {
+    margin-top: 0.55rem;
+  }
+}
+
+.waveform-pw-row {
+  // second control row, no play button — let the freq-group fill the whole width
+  .waveform-freq-group {
+    flex: 1;
+  }
+}
+
+.waveform-play-btn {
+  flex-shrink: 0;
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid $grey-color;
+  background: transparent;
+  color: $text-color;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: $grey-color-light;
+  }
+}
+
+.waveform-demo.is-playing .waveform-play-btn {
+  background: $crimson-color;
+  border-color: $crimson-color;
+  color: #fff;
+
+  &:hover {
+    background: $crimson-color-light;
+    border-color: $crimson-color-light;
+  }
+}
+
+.waveform-freq-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+
+  label {
+    font-size: 0.88rem;
+    color: $grey-color;
+    white-space: nowrap;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 3px;
+    background: $grey-color-light;
+    outline: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: $crimson-color;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border: none;
+      border-radius: 50%;
+      background: $crimson-color;
+      cursor: pointer;
+    }
+  }
+}
+
+.waveform-freq-display {
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.2rem;
+  text-align: right;
+  color: $text-color;
+}
+
+// Light mode overrides
+body:not(.dark-mode) .waveform-demo {
+  border-color: #e0d5cb;
+  background: #fdfbf8;
+}
+
+body:not(.dark-mode) .waveform-freq-group input[type="range"] {
+  background: #e0d5cb;
+}
+
+// Dark mode overrides
+body.dark-mode .waveform-demo {
+  border-color: #2e3440;
+  background: #1c2028;
+}
+
+body.dark-mode .waveform-play-btn {
+  color: #d9dee5;
+  border-color: #3e4556;
+
+  &:hover {
+    background: #2e3440;
+  }
+}
+
+body.dark-mode .waveform-freq-group {
+  label {
+    color: #8a94a0;
+  }
+
+  input[type="range"] {
+    background: #2e3440;
+  }
+}
+
+body.dark-mode .waveform-freq-display {
+  color: #d9dee5;
+}
