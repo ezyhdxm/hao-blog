@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Basic Waveforms in Synthesis"
+title: "Basic Waveforms in Synthesizer"
 date: 2026-03-19 10:00:00 +0800
 tags: music
 lang: en
