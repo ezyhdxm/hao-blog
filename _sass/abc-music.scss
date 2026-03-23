@@ -1,0 +1,112 @@
+// ── Tech-note callout (used in jazz ii-V-I post) ────────────────────────────
+
+.tech-note {
+  margin: 0 0 1.8em;
+  padding: 0.9em 1.2em;
+  border-left: 3px solid #888;
+  background: #f5f5f2;
+  font-size: 0.91em;
+  line-height: 1.65;
+  color: #444;
+
+  p  { margin: 0.55em 0; }
+  ul { margin: 0.3em 0 0.55em 1.4em; padding: 0; }
+  li { margin: 0.15em 0; }
+  a  { color: #6a8f6a; }
+
+  code {
+    background: #e8e8e4;
+    border-radius: 3px;
+    padding: 0 3px;
+    font-size: 0.95em;
+  }
+}
+
+pre.tech-code {
+  margin: 0.6em 0;
+  padding: 0.7em 1em;
+  background: #eeecea;
+  border-radius: 4px;
+  font-size: 0.88em;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+body.dark-mode {
+  .tech-note {
+    background: #1b2027;
+    border-left-color: #555e6b;
+    color: #b6bec8;
+
+    a    { color: #7db87d; }
+    code { background: #252c36; color: #c9d1da; }
+  }
+
+  pre.tech-code { background: #20272f; color: #c9d1da; }
+}
+
+// ── ABC music card ───────────────────────────────────────────────────────────
+
+.abc-example {
+  margin: 1.8em 0;
+  border: 1px solid #ddd0b0;
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07);
+}
+
+.abc-score {
+  padding: 0.5em 1em 0;
+  background: #fffef9;
+
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.abc-player {
+  padding: 0.25em 0.9em 0.45em;
+  background: #f3ede0;
+  border-top: 1px solid #ddd0b0;
+}
+
+.abcjs-inline-audio {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 2px 0 !important;
+}
+
+// dark mode — score keeps paper-white background so notation stays legible
+body.dark-mode {
+  .abc-example {
+    border-color: #35404f;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+
+  .abc-score {
+    background: #f0ece2;
+    // reset currentColor so abcjs SVG elements don't inherit the dark-mode body text colour
+    color: #1a1a1a;
+  }
+
+  .abc-player {
+    background: #161e2b;
+    border-top-color: #2b3545;
+  }
+
+  .abcjs-inline-audio {
+    .abcjs-btn {
+      color: #8a9ab0 !important;
+      fill:  #8a9ab0 !important;
+
+      &:hover { color: #c9d1da !important; fill: #c9d1da !important; }
+    }
+
+    .abcjs-midi-progress,
+    .abcjs-progress-indicator    { background: #2d4a6a !important; }
+    .abcjs-midi-progress-indicator { background: #6a9fc0 !important; }
+  }
+}

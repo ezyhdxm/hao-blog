@@ -1,0 +1,84 @@
+<!-- ─────────────────────────────────────────────────────────────────────────
+     ABC music notation + audio engine (abcjs)
+     Usage: add the Liquid include tag for abc-music.html to any post
+
+     Renders every <div class="abc-example"> on the page:
+       • <pre class="abc-source" style="display:none"> … ABC notation … </pre>
+       • <div class="abc-score"></div>   ← SVG staff injected here
+       • <div class="abc-player"></div>  ← play/pause/progress bar injected here
+
+     Companion stylesheet: _sass/abc-music.scss (compiled into the site CSS).
+     ───────────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/abcjs@6.4.4/abcjs-audio.css">
+<script>
+(function () {
+  var ABCJS_CDN = 'https://cdn.jsdelivr.net/npm/abcjs@6.4.4/dist/abcjs-basic-min.js';
+
+  function loadScript(src, cb) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  function initExamples() {
+    // Shared AudioContext + GainNode so every example uses the same soft output level
+    var AudioCtx = window.AudioContext || window.webkitAudioContext;
+    var audioCtx = new AudioCtx();
+    var gainNode = audioCtx.createGain();
+    gainNode.gain.value = 0.55;   // pull back overall level; 1.0 = unity
+    gainNode.connect(audioCtx.destination);
+
+    var containers = document.querySelectorAll('.abc-example');
+    containers.forEach(function (container) {
+      var abc = container.querySelector('.abc-source').textContent.trim();
+      var scoreDiv = container.querySelector('.abc-score');
+      var playerDiv = container.querySelector('.abc-player');
+
+      var visualObj = ABCJS.renderAbc(scoreDiv, abc, {
+        responsive: 'resize',
+        add_classes: true,
+        staffwidth: 680
+      })[0];
+
+      if (!ABCJS.synth.supportsAudio()) {
+        playerDiv.innerHTML = '<p style="color:#888;font-size:0.9em;">此浏览器不支持 Web Audio，无法播放。</p>';
+        return;
+      }
+
+      var synthControl = new ABCJS.synth.SynthController();
+      synthControl.load(playerDiv, null, {
+        displayPlay: true,
+        displayProgress: true,
+        displayRestart: true,
+        displayWarp: false
+      });
+
+      var createSynth = new ABCJS.synth.CreateSynth();
+      createSynth.init({
+        audioContext: audioCtx,
+        destination: gainNode,
+        visualObj: visualObj,
+        options: {
+          program: 4    // GM 4 = Electric Piano 1 (Rhodes): warm, soft attack
+        }
+      }).then(function () {
+        return synthControl.setTune(visualObj, false, {
+          chordsOff: true,   // suppress chord-symbol accompaniment
+          drumsOff: true     // suppress auto drum track
+        });
+      }).catch(function (e) {
+        console.warn('abcjs synth init error:', e);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      loadScript(ABCJS_CDN, initExamples);
+    });
+  } else {
+    loadScript(ABCJS_CDN, initExamples);
+  }
+})();
+</script>
