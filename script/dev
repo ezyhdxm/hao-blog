@@ -12,8 +12,36 @@ BUNDLER_VERSION="$(
   ' Gemfile.lock
 )"
 
-if [[ -n "${BUNDLER_VERSION}" ]]; then
-  exec bundle "_${BUNDLER_VERSION}_" exec jekyll serve "$@"
+# Symlink any _underdevelopment posts into _posts for local dev.
+# These files are gitignored, so they never get pushed.
+UNDERDEVELOPMENT="$REPO_ROOT/_underdevelopment"
+POSTS="$REPO_ROOT/_posts"
+LINKED_FILES=()
+
+if [[ -d "$UNDERDEVELOPMENT" ]]; then
+  for f in "$UNDERDEVELOPMENT"/*.md "$UNDERDEVELOPMENT"/*.markdown; do
+    [[ -e "$f" ]] || continue
+    filename="$(basename "$f")"
+    symlink="$POSTS/$filename"
+    if [[ ! -e "$symlink" ]]; then
+      ln -s "$f" "$symlink"
+      LINKED_FILES+=("$symlink")
+      echo "[dev] Including draft: $filename"
+    else
+      echo "[dev] Skipping $filename (already exists in _posts)"
+    fi
+  done
 fi
 
-exec bundle exec jekyll serve "$@"
+cleanup() {
+  for f in "${LINKED_FILES[@]+"${LINKED_FILES[@]}"}"; do
+    rm -f "$f"
+  done
+}
+trap cleanup EXIT
+
+if [[ -n "${BUNDLER_VERSION}" ]]; then
+  bundle "_${BUNDLER_VERSION}_" exec jekyll serve "$@"
+else
+  bundle exec jekyll serve "$@"
+fi
