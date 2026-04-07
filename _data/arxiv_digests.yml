@@ -1,4 +1,9 @@
 - applied_count: 5
+  applied_url: /arxiv/2026-04-06-applied/
+  date: '2026-04-06'
+  theory_count: 3
+  theory_url: /arxiv/2026-04-06-theory/
+- applied_count: 5
   applied_url: /arxiv/2026-04-04-applied/
   date: '2026-04-04'
   theory_count: 3
